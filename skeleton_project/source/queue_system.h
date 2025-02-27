@@ -1,18 +1,5 @@
 #include "elevio.h"
 
-/*
-typedef struct {
-    int bestilling_etasje;
-    ButtonType bestilling_retning;
-} bestilling_hall;
-
-typedef struct {
-    int floor_target;
-    int floor_source;
-    int elevator_direction;
-} bestilling_CAB;
-*/
-
 typedef struct {
     int floor_target;
     int elevator_direction;
