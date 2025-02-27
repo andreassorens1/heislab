@@ -1,13 +1,18 @@
-#include "elevio.h"
+#pragma once
 
+#include "driver/elevio.h"
+
+int queue[2][4];
+
+/*
 typedef struct {
     int floor_target;
     int elevator_direction;
 } bestilling;
+*/
 
-
-bestilling create_bestilling(int floor, ButtonType button);
-void add_bestilling(bestilling nyBestilling);
+//bestilling create_bestilling(int floor, ButtonType button);
+//void add_bestilling(bestilling nyBestilling);
 
 
 

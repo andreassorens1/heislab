@@ -1,32 +1,27 @@
 #include "queue_system.h"
-#include "elevio.h"
+#include "driver/elevio.h"
 
-bestilling create_bestilling(int floor, int current_floor, ButtonType button){  ///ikke blad floor og current floor
+int queue[2][4] = {
+    {0, 0, 1, 0},              //array heis opp
+    {1, 1, 0, 0}               //array heis ned
+};
 
-    bestilling nyBestilling;
 
-    if (button <= 1){                  //hvis knapp trykkes på gangen
-        nyBestilling.elevator_direction = button;
-        nyBestilling.floor_target = floor;
+void add_to_queue(int target_floor, ButtonType button){  ///ikke blad floor og current floor
+
+    if (button == 0){                  //hvis heisen skal opp
+        queue[0][target_floor] = 1;
     }
-    else {                             //hvis knapp trykkes inni heisen
-        /*regne ut retning: targetfloor - currentfloor
-        hvis forskjell negativ:
-            direction = ned
-        else 
-            direction = opp
-        */
-       nyBestilling.floor_target = floor;    //? er dette riktig floor vi tenker på
+    else if (button == 1) {            //hvis heisen skal ned
+        queue[1][target_floor] = 1;
     }
-    return nyBestilling;
+    else {                             //hvis knapp trykkes inni heis
+        int current_floor = elevio_floorSensor();
+        if (current_floor < target_floor){
+            queue[0][target_floor] = 1;
+        }
+        else if (current_floor > target_floor){
+            queue[1][target_floor] = 1;
+        }
+    };
 };
-
-void add_bestilling(bestilling nyBestilling){
-
-};
-
-/*
-int setbestilling_etasje(bestilling_hall *nyBestilling) {
-    //nyBestilling.bestilling_etasje = 
-};
-*/
