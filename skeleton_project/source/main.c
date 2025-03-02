@@ -5,7 +5,7 @@
 #include <unistd.h>  //sleep-funksjonen
 #include "driver/elevio.h"
 #include "queue_system.h"
-#include "button.h"
+#include "check.h"
 
 
 
@@ -14,39 +14,67 @@ int main(){
     
     printf("=== Example Program ===\n");
     printf("Press the stop button on the elevator panel to exit\n");
+    printf("startetasje ", "%d", elevio_floorSensor());
 
-
-    elevio_motorDirection(DIRN_UP);
+    /*
+    if (current_floor == -1){
+        //stopp
+    }
+    */
 
     while(1){
+
         int floor = elevio_floorSensor();
 
         for (int i=0; i<2; i++){
             if (i == 0){
                 for (int j=0; j<4; j++){
+                    //check_all(current_floor);
+                    check_buttons();
+                    check_stopButton();
                     if (queue[i][j] == 1){
-                        elevio_motorDirection(DIRN_UP);
-                        while (floor != j){
-                            floor = elevio_floorSensor();
-                            check_buttons();
-                            check_stopButton();
+                        floor = elevio_floorSensor();                  //vi får -1, hvordan kan vi fikse?
+                        printf("%d", floor);
+                        if (floor != j){
+                            elevio_motorDirection(DIRN_UP);
+                            printf("går opp \n");
+                            while (floor != j){
+                                //check_all(current_floor);
+                                floor = elevio_floorSensor();
+                                check_buttons();
+                                check_stopButton();
+                            }
                         }
                         elevio_motorDirection(DIRN_STOP);
-                        sleep(1);
+                        queue[i][j] = 0;
+                        printf("stopper.. \n");
+                        //sleep(1);
                     }
                 }
             }
             else if (i == 1){
                 for (int j=3; j>=0; j--){
+                    //check_all(current_floor);
+                    check_buttons();
+                    check_stopButton();
                     if (queue[i][j] == 1){
-                        elevio_motorDirection(DIRN_DOWN);
-                        while (floor != j){
-                            floor = elevio_floorSensor();
-                            check_buttons();
-                            check_stopButton();
+                        //
+                        floor = elevio_floorSensor();                  //vi får -1, hvordan kan vi fikse?
+                        printf("%d", floor);
+                        if (floor != j){
+                            elevio_motorDirection(DIRN_DOWN);
+                            printf("går ned \n");
+                            while (floor != j){
+                                //check_all(current_floor);
+                                floor = elevio_floorSensor();
+                                check_buttons();
+                                check_stopButton();
+                            }
                         }
                         elevio_motorDirection(DIRN_STOP);
-                        sleep(1);
+                        queue[i][j] = 0;
+                        printf("stopper.. \n");
+                        // sleep(1);
                     }
                 }
             }  

@@ -4,6 +4,8 @@
 
 int queue[2][4];
 
+void add_to_queue(int target_floor, int button, int queue[2][4]);
+
 /*
 typedef struct {
     int floor_target;

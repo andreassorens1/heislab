@@ -2,21 +2,22 @@
 #include "driver/elevio.h"
 
 int queue[2][4] = {
-    {0, 0, 1, 0},              //array heis opp
-    {1, 1, 0, 0}               //array heis ned
+    {0, 0, 0, 0},              //array heis opp
+    {0, 0, 0, 0}               //array heis ned
 };
 
 
-void add_to_queue(int target_floor, ButtonType button){  ///ikke blad floor og current floor
-
+void add_to_queue(int target_floor, int button, int queue[2][4]){  ///ikke blad floor og current floor
     if (button == 0){                  //hvis heisen skal opp
         queue[0][target_floor] = 1;
     }
     else if (button == 1) {            //hvis heisen skal ned
         queue[1][target_floor] = 1;
     }
-    else {                             //hvis knapp trykkes inni heis
+    else {   
+        //printf("heispanel\n");                          //hvis knapp trykkes inni heis
         int current_floor = elevio_floorSensor();
+        printf("%d\n", current_floor);
         if (current_floor < target_floor){
             queue[0][target_floor] = 1;
         }
@@ -24,4 +25,15 @@ void add_to_queue(int target_floor, ButtonType button){  ///ikke blad floor og c
             queue[1][target_floor] = 1;
         }
     };
+    
+
+    //printe queue
+    printf("queuefunksjon\n");
+    for (int i = 0; i<2; i++){
+        for (int j = 0; j<4; j++){
+            printf("%d ", queue[i][j]);
+        }
+        printf("\n");
+    }
+
 };
