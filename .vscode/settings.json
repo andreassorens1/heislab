@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "bestilling.h": "c"
+        "bestilling.h": "c",
+        "cmath": "c"
     }
 }
