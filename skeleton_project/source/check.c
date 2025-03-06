@@ -2,6 +2,7 @@
 #include "check.h"
 #include "driver/elevio.h"
 #include "queue_system.h"
+#include "door.h"
 
 /*
 void check_all(int current_floor){
@@ -50,4 +51,16 @@ int check_floor(int floor){
     }
     return floor;
 }
-                                
+
+/*void check_obstruction(){
+    int obstruction = elevio_obstruction();
+    if (obstruction == 0){
+        open_door(door_lamp_off);
+        printf("Ingen obstruksjon \n");
+    }
+    else {
+        printf("Døren holdes åpen pga obstruksjon \n");
+        open_door(door_lamp_on);
+    }
+}
+ */                               

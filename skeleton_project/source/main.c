@@ -6,6 +6,7 @@
 #include "driver/elevio.h"
 #include "queue_system.h"
 #include "check.h"
+#include "door.h"
 
 
 
@@ -39,16 +40,27 @@ int main(){
                     floor = check_floor(floor); 
                     if (queue[i][j] == 1){
                         if (floor != j){
-                            elevio_motorDirection(DIRN_UP);
-                            printf("går opp \n");
+                            //elevio_motorDirection(DIRN_UP);
+                            if (floor > j){
+                                elevio_motorDirection(DIRN_DOWN);
+                                printf("går ned \n");
+                            }
+                            else {
+                                elevio_motorDirection(DIRN_UP);
+                                printf("går opp \n");
+                            }
+                            
                             while (floor != j){
                                 //check_all(current_floor);
                                 check_buttons(floor);
                                 check_stopButton();
                                 floor = check_floor(floor); 
+                                //floor = elevio_floorSensor(); 
                             }
                         }
                         elevio_motorDirection(DIRN_STOP);
+                        //open_door(door_lamp_on);
+                        //open_door(door_lamp_off);
                         queue[i][j] = 0;
                         printf("stopper.. \n");
                         //sleep(1);
@@ -64,39 +76,34 @@ int main(){
                     if (queue[i][j] == 1){
 
                         if (floor != j){
-                            elevio_motorDirection(DIRN_DOWN);
-                            printf("går ned \n");
+                            //elevio_motorDirection(DIRN_DOWN);
+                            if (floor > j){
+                                elevio_motorDirection(DIRN_DOWN);
+                                printf("går ned \n");
+                            }
+                            else {
+                                elevio_motorDirection(DIRN_UP);
+                                printf("går opp \n");
+                            }
                             while (floor != j){
                                 //check_all(current_floor);
                                 check_buttons(floor);
                                 check_stopButton();
                                 floor = check_floor(floor); 
+                                //floor = elevio_floorSensor(); 
                             }
                         }
                         elevio_motorDirection(DIRN_STOP);
                         queue[i][j] = 0;
+                        //open_door(door_lamp_on);
+                        //open_door(door_lamp_off);
                         printf("stopper.. \n");
                         // sleep(1);
                     }
                 }
             }  
         }
-
-
-
-        if(elevio_obstruction()){
-            elevio_stopLamp(1);
-        } else {
-            elevio_stopLamp(0);
-        }
         
-        if(elevio_stopButton()){
-            elevio_motorDirection(DIRN_STOP);
-            break;
-        }
-        
-
-        nanosleep(&(struct timespec){0, 20*1000*1000}, NULL);
     }
 
     return 0;
