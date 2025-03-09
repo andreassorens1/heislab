@@ -6,6 +6,5 @@
 #include "check.h"
 
 
-void door_lamp_on();
-void door_lamp_off();
-void open_door(void (*elevio_doorOpenLamp)());
+void open_door(int floor);
+void obstruction_wait(int floor);

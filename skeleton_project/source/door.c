@@ -3,58 +3,35 @@
 
 
 
-//timerfunksjon med nanosleep
-
-
-void door_lamp_on(){
+void open_door(floor){
     elevio_doorOpenLamp(1);
-}
 
+    while (elevio_stopButton()){
+            elevio_stopLamp(1);
+    }
+        
+    elevio_stopLamp(0);
 
-
-void door_lamp_off(){
+    for(int i = 0; i < 1000; i++){
+        usleep(2500);
+        check_buttons(floor);
+        if (elevio_obstruction()){
+            obstruction_wait(floor);
+            break;
+        }
+    }
+    
     elevio_doorOpenLamp(0);
 }
 
 
-int is_obstructed(){
-    return elevio_obstruction;
-}
-
-
-/*
-void open_door(void (*elevio_doorOpenLamp)()){
-
-
-
-    time_t start, now;
-    struct timespec wait;
-
-    wait.tv_sec = 0;
-    wait.tv_nsec = 1000000;
-    
-    start = time(NULL);
-
-    while (1){
-        while(elevio_obstruction()){
-            printf("Obstruksjon \n");
-        }
-
-
-        nanosleep(&wait, NULL);
-        }
+void obstruction_wait(floor){
+    while (elevio_obstruction()){
+        check_buttons(floor);
     }
-    
-    
 
-    elevio_doorOpenLamp();
-
-    //timer
-
-    //while timeren ikke har gått ut
-    //check all
-    //if obstruksjon
-    //start timer 3 sek på nytt
+    for(int i = 0; i < 1000; i++){
+        usleep(2500);
+        check_buttons(floor);
+    }
 }
-
-*/
