@@ -19,8 +19,6 @@ int main(){
 
     
     int floor = elevio_floorSensor();
-
-    int stop_button_pressed = 0;
     //int *stop_ptr = &stop_button_pressed;
 
     if (floor == -1){
