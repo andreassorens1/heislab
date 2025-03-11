@@ -1,6 +1,7 @@
 #include "stdio.h"   //print
 #include "queue_system.h"
 #include "driver/elevio.h"
+#include "check.h"
 
 
 int queue[2][4] = {
@@ -9,7 +10,9 @@ int queue[2][4] = {
 };
 
 
-void add_to_queue(int current_floor, int target_floor, int button, int queue[2][4]){  ///ikke blad floor og current floor
+// int queue[2][4]
+
+void add_to_queue(int current_floor, int target_floor, int button){  ///ikke blad floor og current floor
     if (button == 0){                  //hvis heisen skal opp
         queue[0][target_floor] = 1;
         /*for (int i = current_floor + 1; i < target_floor; i++){

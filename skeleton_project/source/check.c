@@ -3,6 +3,7 @@
 #include "driver/elevio.h"
 #include "queue_system.h"
 #include "door.h"
+#include "motor.h"
 
 /*
 void check_all(int current_floor){
@@ -18,16 +19,18 @@ void check_buttons(int floor){
         for(int b = 0; b < N_BUTTONS; b++){
             int btnPressed = elevio_callButton(f, b);
             if (btnPressed && floor != f){
-                add_to_queue(floor, f, b, queue);
+                add_to_queue(floor, f, b);
                 elevio_buttonLamp(f, b, 1);
             }
         }
     }
 }
 
-void check_stopButton(int floor){
+void check_stopButton(int floor, int j){
     if(elevio_stopButton()){
         elevio_motorDirection(DIRN_STOP);
+        //*stop_ptr = 1;
+
         for (int i = 0; i < 2; i++){
             for (int j = 0; j < 4; j++){
                 queue[i][j] = 0;
@@ -48,7 +51,9 @@ void check_stopButton(int floor){
         
         elevio_stopLamp(0);
 
-    } 
+        //start_motor(floor, j);  //vil ikke at den skal gjøre dette
+
+    }   
 }
 
 

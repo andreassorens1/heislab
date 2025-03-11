@@ -20,6 +20,9 @@ int main(){
     
     int floor = elevio_floorSensor();
 
+    int stop_button_pressed = 0;
+    //int *stop_ptr = &stop_button_pressed;
+
     if (floor == -1){
         while (floor == -1){
             floor = elevio_floorSensor();
@@ -36,23 +39,17 @@ int main(){
                 for (int j=0; j<4; j++){
                     //check_all(current_floor);
                     check_buttons(floor);
-                    check_stopButton(floor);
+                    check_stopButton(floor, j);
                     floor = check_floor(floor); 
                     if (queue[i][j] == 1 && floor != j){
                         start_motor(floor, j);
                         while (floor != j){
                             //check_all(current_floor);
                             check_buttons(floor);               //kommer seg aldri ut av while-løkka når stoppknappen trykkes
-                            check_stopButton(floor);
+                            check_stopButton(floor, j);
                             floor = check_floor(floor); 
                         }
-                        elevio_motorDirection(DIRN_STOP);
-                        elevio_buttonLamp(j, 2, 0);
-                        elevio_buttonLamp(j, i, 0);
-                        open_door(floor);
-                        queue[i][j] = 0;
-                        printf("stopper.. \n");
-                        //sleep(1);
+                        stop_motor(floor, i ,j);
                     }
                 }
             }
@@ -60,23 +57,17 @@ int main(){
                 for (int j=3; j>=0; j--){
                     //check_all(current_floor);
                     check_buttons(floor);
-                    check_stopButton(floor);
+                    check_stopButton(floor, j);
                     floor = check_floor(floor);
                     if (queue[i][j] == 1 && floor != j){
                         start_motor(floor, j);
                         while (floor != j){
                             //check_all(current_floor);
                             check_buttons(floor);
-                            check_stopButton(floor);
+                            check_stopButton(floor, j);
                             floor = check_floor(floor); 
                         }
-                        elevio_motorDirection(DIRN_STOP);
-                        elevio_buttonLamp(j, 2, 0);
-                        elevio_buttonLamp(j, i, 0);
-                        open_door(floor);
-                        queue[i][j] = 0;
-                        printf("stopper.. \n");
-                        // sleep(1);
+                        stop_motor(floor, i, j);
                     }
                 }
             }  
