@@ -3,7 +3,7 @@
 
 
 
-void open_door(floor){
+void open_door(int floor){
     elevio_doorOpenLamp(1);
 
     while (elevio_stopButton()){
@@ -25,7 +25,7 @@ void open_door(floor){
 }
 
 
-void obstruction_wait(floor){
+void obstruction_wait(int floor){
     while (elevio_obstruction()){
         check_buttons(floor);
     }
