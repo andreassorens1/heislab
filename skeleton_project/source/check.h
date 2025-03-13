@@ -1,9 +1,11 @@
 #pragma once
 
-void check_all(int current_floor);
+#include "stdio.h"
+#include "driver/elevio.h"
+#include "queue_system.h"
+#include "door.h"
 
-void check_buttons();
-void check_stopButton();
-//void check_obstruction();
+void check_buttons(int floor);
 
-int check_floor(int current_floor);
+int check_stopButton(int floor);
+int check_floor(int floor);

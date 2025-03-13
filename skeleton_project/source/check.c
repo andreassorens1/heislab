@@ -1,16 +1,4 @@
-#include "stdio.h"  //fjern når vi tar bort printen i check_floor()
 #include "check.h"
-#include "driver/elevio.h"
-#include "queue_system.h"
-#include "door.h"
-
-/*
-void check_all(int current_floor){
-    check_buttons(current_floor, queue);  //ta bort queue fra input
-    check_stopButton();
-    check_floor(current_floor);
-}
-*/
 
 
 void check_buttons(int floor){
@@ -25,14 +13,16 @@ void check_buttons(int floor){
     }
 }
 
-void check_stopButton(int floor){
+
+
+int check_stopButton(int floor){
     if(elevio_stopButton()){
         elevio_motorDirection(DIRN_STOP);
         for (int i = 0; i < 2; i++){
             for (int j = 0; j < 4; j++){
                 queue[i][j] = 0;
                 elevio_buttonLamp(j, i, 0);
-                elevio_buttonLamp(j, 2, 0); // fiks slik ikke dobbelt
+                elevio_buttonLamp(j, 2, 0); // fiks slik ikke dobbelt?
             }
         }
         printf("forrige etasje %d\n", floor);
@@ -48,12 +38,11 @@ void check_stopButton(int floor){
         
         elevio_stopLamp(0);
 
-    } 
+        return 1;
+    }
+    return 0; 
 }
 
-
-
-//pass-by-reference vs. pass-by-value
 
 int check_floor(int floor){
     int current_floor = elevio_floorSensor();

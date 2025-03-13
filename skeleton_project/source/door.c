@@ -1,6 +1,4 @@
 #include "door.h"
-#include "driver/elevio.h"
-
 
 
 void open_door(int floor){

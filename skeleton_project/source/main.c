@@ -19,6 +19,7 @@ int main(){
 
     
     int floor = elevio_floorSensor();
+    int stopButton_pressed = 0;
 
     if (floor == -1){
         while (floor == -1){
@@ -34,42 +35,39 @@ int main(){
         for (int i=0; i<2; i++){
             if (i == 0){
                 for (int j=0; j<4; j++){
-                    //check_all(current_floor);
                     check_buttons(floor);
                     check_stopButton(floor);
                     floor = check_floor(floor); 
                     if (queue[i][j] == 1 && floor != j){
                         start_motor(floor, j);
-                        while (floor != j){
-                            //check_all(current_floor);
-                            check_buttons(floor);               //kommer seg aldri ut av while-løkka når stoppknappen trykkes
-                            check_stopButton(floor);
+                        while (floor != j && stopButton_pressed == 0){
+                            check_buttons(floor);                             
+                            stopButton_pressed = check_stopButton(floor);
                             floor = check_floor(floor); 
                         }
-                        stop_motor(floor, i, j);
+                        stop_motor(floor, stopButton_pressed, i, j);
+                        stopButton_pressed = 0;
                     }
                 }
             }
             else if (i == 1){
                 for (int j=3; j>=0; j--){
-                    //check_all(current_floor);
                     check_buttons(floor);
                     check_stopButton(floor);
                     floor = check_floor(floor);
                     if (queue[i][j] == 1 && floor != j){
                         start_motor(floor, j);
-                        while (floor != j){
-                            //check_all(current_floor);
+                        while (floor != j && stopButton_pressed == 0){
                             check_buttons(floor);
-                            check_stopButton(floor);
+                            stopButton_pressed = check_stopButton(floor);
                             floor = check_floor(floor); 
                         }
-                        stop_motor(floor, i, j);
+                        stop_motor(floor, stopButton_pressed, i, j);
+                        stopButton_pressed = 0;
                     }
                 }
             }  
         }
-        
     }
 
     return 0;
