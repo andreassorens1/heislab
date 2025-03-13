@@ -1,7 +1,9 @@
 #include "motor.h"
 #include "driver/elevio.h"
+#include "door.h"
+#include "queue_system.h"
 
-void start_motor(floor, j){
+void start_motor(int floor, int j){
     if (floor > j){
         elevio_motorDirection(DIRN_DOWN);
         printf("går ned \n");
@@ -10,4 +12,13 @@ void start_motor(floor, j){
         elevio_motorDirection(DIRN_UP);
         printf("går opp \n");
     }
+}
+
+void stop_motor(int floor, int i, int j){
+    elevio_motorDirection(DIRN_STOP);
+    elevio_buttonLamp(j, 2, 0);
+    elevio_buttonLamp(j, i, 0);
+    open_door(floor);
+    queue[i][j] = 0;
+    printf("stopper.. \n");
 }

@@ -46,13 +46,7 @@ int main(){
                             check_stopButton(floor);
                             floor = check_floor(floor); 
                         }
-                        elevio_motorDirection(DIRN_STOP);
-                        elevio_buttonLamp(j, 2, 0);
-                        elevio_buttonLamp(j, i, 0);
-                        open_door(floor);
-                        queue[i][j] = 0;
-                        printf("stopper.. \n");
-                        //sleep(1);
+                        stop_motor(floor, i, j);
                     }
                 }
             }
@@ -70,13 +64,7 @@ int main(){
                             check_stopButton(floor);
                             floor = check_floor(floor); 
                         }
-                        elevio_motorDirection(DIRN_STOP);
-                        elevio_buttonLamp(j, 2, 0);
-                        elevio_buttonLamp(j, i, 0);
-                        open_door(floor);
-                        queue[i][j] = 0;
-                        printf("stopper.. \n");
-                        // sleep(1);
+                        stop_motor(floor, i, j);
                     }
                 }
             }  
